@@ -63,7 +63,7 @@ class CrisisDetector:
         rolling_std = (
             pd.Series(data).rolling(window=self.window_size, center=False).std()
         )
-        
+
         # Fill NaN values at the beginning
         rolling_mean = rolling_mean.bfill()
         rolling_std = rolling_std.bfill().replace(0, 1e-8)  # Avoid division by zero
