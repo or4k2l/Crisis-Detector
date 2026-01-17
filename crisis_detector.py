@@ -158,23 +158,24 @@ class CrisisDetector:
         """Calculate rolling volatility scores."""
         volatility = np.zeros_like(data)
 
-        # Calculate returns
-        returns = np.diff(data, prepend=data[0])
+        # Calculate returns, skip first element to avoid artificial zero return
+        returns = np.diff(data)
 
         for i in range(len(data)):
-            if i < self.window_size:
-                window_returns = returns[: i + 1]
+            if i == 0:
+                volatility[i] = 0
+            elif i < self.window_size:
+                window_returns = returns[:i]
             else:
                 window_returns = returns[i - self.window_size : i]
 
-            if len(window_returns) > 1:
+            if i > 0 and len(window_returns) > 1:
                 volatility[i] = np.std(window_returns)
-            else:
-                volatility[i] = 0
 
-        # Normalize volatility
-        if np.max(volatility) > 0:
-            volatility = volatility / np.max(volatility)
+        # Normalize volatility with minimum threshold to avoid division issues
+        max_vol = np.max(volatility)
+        if max_vol > 1e-8:  # Use small threshold to avoid numerical instability
+            volatility = volatility / max_vol
 
         return volatility
 

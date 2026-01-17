@@ -33,7 +33,9 @@ def setup_output_directory():
     return plots_dir
 
 
-def plot_crisis_detection(data, crisis_flags, scores, ticker, output_dir):
+def plot_crisis_detection(
+    data, crisis_flags, scores, ticker, output_dir, threshold=3.0
+):
     """
     Create and save visualization plots.
 
@@ -48,6 +50,9 @@ def plot_crisis_detection(data, crisis_flags, scores, ticker, output_dir):
     ticker : str
         Stock ticker symbol
     output_dir : Path
+        Directory to save plots
+    threshold : float, default=3.0
+        Detection threshold to show on plot
         Directory to save plots
     """
     fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(14, 10))
@@ -72,12 +77,14 @@ def plot_crisis_detection(data, crisis_flags, scores, ticker, output_dir):
 
     # Plot 2: Anomaly scores
     ax2.plot(data.index, scores, label="Anomaly Score", color="orange", linewidth=1.5)
-    ax2.axhline(y=3.0, color="red", linestyle="--", linewidth=1, label="Threshold")
+    ax2.axhline(
+        y=threshold, color="red", linestyle="--", linewidth=1, label="Threshold"
+    )
     ax2.fill_between(
         data.index,
         0,
         scores,
-        where=(scores > 3.0),
+        where=(scores > threshold),
         alpha=0.3,
         color="red",
         label="Crisis Region",
@@ -195,7 +202,12 @@ def main():
         print("\nGenerating plots...")
         output_dir = setup_output_directory()
         plot_crisis_detection(
-            prices, results["crisis_flags"], results["scores"], args.ticker, output_dir
+            prices,
+            results["crisis_flags"],
+            results["scores"],
+            args.ticker,
+            output_dir,
+            threshold=args.threshold,
         )
 
         print("\n✓ Demo completed successfully!")
