@@ -53,7 +53,6 @@ def plot_crisis_detection(
         Directory to save plots
     threshold : float, default=3.0
         Detection threshold to show on plot
-        Directory to save plots
     """
     fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(14, 10))
 
