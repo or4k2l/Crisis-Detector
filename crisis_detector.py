@@ -8,7 +8,6 @@ potential crisis events using statistical and machine learning techniques.
 
 import numpy as np
 import pandas as pd
-from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import IsolationForest
 import matplotlib.pyplot as plt
 from typing import Dict, Optional, Tuple, Union
@@ -55,7 +54,6 @@ class CrisisDetector:
         self.min_crisis_duration = min_crisis_duration
         self.use_isolation_forest = use_isolation_forest
         self.contamination = contamination
-        self.scaler = StandardScaler()
 
     def process_signal(
         self,
@@ -339,7 +337,7 @@ class CrisisDetector:
 
 def load_finance_data(
     ticker: str = "^GSPC", start_date: str = "2020-01-01", end_date: str = "2023-12-31"
-) -> pd.DataFrame:
+) -> Optional[pd.DataFrame]:
     """
     Load financial time-series data using yfinance.
 

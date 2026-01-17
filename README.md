@@ -34,6 +34,18 @@ cd Crisis-Detector
 pip install -r requirements.txt
 ```
 
+### Development Installation
+
+For development, install in editable mode:
+
+```bash
+git clone https://github.com/or4k2l/Crisis-Detector.git
+cd Crisis-Detector
+pip install -e .
+```
+
+This allows you to run the package from anywhere without sys.path manipulation.
+
 ### Requirements
 
 - Python 3.9+
