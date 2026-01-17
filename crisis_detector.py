@@ -6,11 +6,16 @@ domains including finance, seismology, gravitational waves, and neurophysiology 
 potential crisis events using statistical and machine learning techniques.
 """
 
+import logging
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import IsolationForest
 import matplotlib.pyplot as plt
-from typing import Dict, Optional, Tuple, Union
+from typing import Dict, Optional, Tuple, Union, List
+
+# Configure logger
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 
 class CrisisDetector:
@@ -142,7 +147,10 @@ class CrisisDetector:
         anomalies = anomalies | (volatility_norm > volatility_threshold)
 
         # Method 3: Isolation Forest (if enabled)
+        # Note: Requires minimum 100 points for statistical reliability
+        # and stable anomaly detection performance
         if self.use_isolation_forest and n_points >= 100:
+            logger.debug(f"Applying Isolation Forest to {n_points} data points")
             features = np.column_stack([signal_values, volatility_norm, z_scores])
 
             # Remove NaN rows for Isolation Forest
@@ -327,7 +335,7 @@ class CrisisDetector:
 
         if save_path:
             plt.savefig(save_path, dpi=150, bbox_inches="tight")
-            print(f"Plot saved to {save_path}")
+            logger.info(f"Plot saved to {save_path}")
 
         return fig
 
@@ -353,9 +361,10 @@ def load_finance_data(
         import yfinance as yf
 
         data = yf.download(ticker, start=start_date, end=end_date, progress=False)
+        logger.info(f"Successfully loaded finance data for {ticker}")
         return data
     except Exception as e:
-        print(f"Error loading finance data: {e}")
+        logger.error(f"Error loading finance data: {e}", exc_info=True)
         return None
 
 
@@ -394,9 +403,10 @@ def load_seismic_data(
             UTCDateTime(starttime),
             UTCDateTime(endtime),
         )
+        logger.info(f"Successfully loaded seismic data from {network}.{station}")
         return st[0].data
     except Exception as e:
-        print(f"Error loading seismic data: {e}")
+        logger.error(f"Error loading seismic data: {e}", exc_info=True)
         return None
 
 
@@ -418,9 +428,10 @@ def load_gravitational_wave_data(
         from gwpy.timeseries import TimeSeries
 
         data = TimeSeries.fetch_open_data(detector, start_time, end_time, cache=True)
+        logger.info(f"Successfully loaded gravitational wave data from {detector}")
         return data.value
     except Exception as e:
-        print(f"Error loading gravitational wave data: {e}")
+        logger.error(f"Error loading gravitational wave data: {e}", exc_info=True)
         return None
 
 
@@ -444,9 +455,10 @@ def load_eeg_data(sample_dataset: str = "sample") -> Optional[np.ndarray]:
 
         # Get EEG data from first channel
         eeg_data = raw.get_data(picks="eeg")[0]
+        logger.info(f"Successfully loaded EEG data from {sample_dataset}")
         return eeg_data
     except Exception as e:
-        print(f"Error loading EEG data: {e}")
+        logger.error(f"Error loading EEG data: {e}", exc_info=True)
         return None
 
 
@@ -464,7 +476,8 @@ def load_economic_data(dataset: str = "GDP") -> Optional[pd.DataFrame]:
         from statsmodels.datasets import macrodata
 
         data = macrodata.load_pandas().data
+        logger.info(f"Successfully loaded economic data: {dataset}")
         return data
     except Exception as e:
-        print(f"Error loading economic data: {e}")
+        logger.error(f"Error loading economic data: {e}", exc_info=True)
         return None

@@ -26,17 +26,13 @@ Crisis Detector is a powerful Python library that identifies potential crisis ev
 
 ## Installation
 
-### From source
+### From PyPI (coming soon)
 
 ```bash
-git clone https://github.com/or4k2l/Crisis-Detector.git
-cd Crisis-Detector
-pip install -r requirements.txt
+pip install crisis-detector
 ```
 
-### Development Installation
-
-For development, install in editable mode:
+### From source
 
 ```bash
 git clone https://github.com/or4k2l/Crisis-Detector.git
@@ -44,15 +40,42 @@ cd Crisis-Detector
 pip install -e .
 ```
 
-This allows you to run the package from anywhere without sys.path manipulation.
+### Optional Dependencies
 
-### Requirements
+Install domain-specific dependencies as needed:
+
+```bash
+# For financial data analysis
+pip install crisis-detector[finance]
+
+# For seismic data analysis
+pip install crisis-detector[seismic]
+
+# For gravitational wave analysis
+pip install crisis-detector[gravitational]
+
+# For neurophysiology analysis
+pip install crisis-detector[neuro]
+
+# For development (testing, linting)
+pip install crisis-detector[dev]
+
+# Install everything
+pip install crisis-detector[all]
+```
+
+### Core Requirements
 
 - Python 3.9+
 - numpy, pandas, scipy
 - scikit-learn, matplotlib
-- statsmodels, yfinance
-- mne, gwpy, obspy (for domain-specific data loading)
+
+### Optional Requirements
+
+- **Finance**: yfinance, statsmodels
+- **Seismic**: obspy
+- **Gravitational Waves**: gwpy
+- **Neurophysiology**: mne
 
 ## Quick Start
 
@@ -61,6 +84,10 @@ This allows you to run the package from anywhere without sys.path manipulation.
 ```python
 from crisis_detector import CrisisDetector
 import numpy as np
+import logging
+
+# Optional: Enable logging to see processing details
+logging.basicConfig(level=logging.INFO)
 
 # Create a detector instance
 detector = CrisisDetector(
@@ -197,9 +224,16 @@ pytest tests/ -v
 # Run specific test file
 pytest tests/test_detector_basic.py -v
 
+# Run advanced tests
+pytest tests/test_detector_advanced.py -v
+
 # Run with coverage
 pytest tests/ --cov=crisis_detector --cov-report=html
 ```
+
+The test suite includes:
+- **Basic tests**: Core functionality validation
+- **Advanced tests**: Edge cases, performance, and domain-specific scenarios
 
 ## Development
 
