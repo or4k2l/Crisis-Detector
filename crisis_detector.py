@@ -108,6 +108,30 @@ class CrisisDetector:
         timestamps = timestamps[valid_mask]
 
         n_points = len(signal_values)
+        
+        # Handle edge case: too few points for analysis
+        if n_points < 2:
+            logger.warning(f"Signal has only {n_points} point(s), returning minimal results")
+            return {
+                "signal": signal_values,
+                "timestamps": timestamps,
+                "crisis_score": np.zeros(n_points),
+                "crisis_regions": np.zeros(n_points, dtype=bool),
+                "volatility": np.zeros(n_points),
+                "z_scores": np.zeros(n_points),
+                "anomalies": np.zeros(n_points, dtype=bool),
+                "metrics": {
+                    "total_points": n_points,
+                    "crisis_points": 0,
+                    "crisis_ratio": 0.0,
+                    "n_crisis_events": 0,
+                    "mean_crisis_score": 0.0,
+                    "max_crisis_score": 0.0,
+                    "mean_signal": np.mean(signal_values) if n_points > 0 else 0.0,
+                    "std_signal": 0.0,
+                    "n_anomalies": 0,
+                },
+            }
 
         # Calculate rolling statistics
         rolling_mean = (
