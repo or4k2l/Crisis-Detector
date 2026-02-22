@@ -266,7 +266,18 @@ flake8 . --max-line-length=100
 
 ```
 Crisis-Detector/
-├── crisis_detector.py          # Main detector implementation
+├── crisis_detector/
+│   ├── __init__.py          # Public API re-exports
+│   ├── detector.py          # CrisisDetector class
+│   ├── visualization.py     # Visualization logic
+│   ├── utils.py             # Shared utility functions
+│   ├── py.typed             # PEP 561 type marker
+│   └── loaders/
+│       ├── __init__.py
+│       ├── finance.py       # load_finance_data, load_economic_data
+│       ├── seismic.py       # load_seismic_data
+│       ├── gravitational.py # load_gravitational_wave_data
+│       └── neuro.py         # load_eeg_data
 ├── scripts/
 │   └── run_demo.py            # Demo script
 ├── tests/
@@ -274,10 +285,11 @@ Crisis-Detector/
 ├── .github/
 │   └── workflows/
 │       └── ci.yml             # CI/CD pipeline
+├── pyproject.toml             # Package configuration
 ├── requirements.txt           # Dependencies
 ├── README.md                  # Documentation
 ├── LICENSE                    # MIT License
-└── .gitignore                # Git ignore rules
+└── .gitignore                 # Git ignore rules
 ```
 
 ## Use Cases
