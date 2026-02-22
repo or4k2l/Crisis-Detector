@@ -361,7 +361,7 @@ If you use this software in your research, please cite:
 ```bibtex
 @software{crisis_detector,
   title={Crisis Detector: A Multi-Domain Anomaly Detection Framework},
-  author={or4k2l},
+  author={Akbay, Yahya},
   year={2026},
   url={https://github.com/or4k2l/Crisis-Detector}
 }
