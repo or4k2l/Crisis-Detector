@@ -1,14 +1,15 @@
 """Neurophysiology data loader: load_eeg_data."""
 
+from __future__ import annotations
+
 import logging
-from typing import Optional
 
 import numpy as np
 
 logger = logging.getLogger(__name__)
 
 
-def load_eeg_data(sample_dataset: str = "sample") -> Optional[np.ndarray]:
+def load_eeg_data(sample_dataset: str = "sample") -> np.ndarray | None:
     """
     Load EEG data using MNE.
 

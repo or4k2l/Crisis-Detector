@@ -1,7 +1,8 @@
 """CrisisDetector – core detection class."""
 
+from __future__ import annotations
+
 import logging
-from typing import Dict, Optional, Tuple, Union
 
 import numpy as np
 import pandas as pd
@@ -63,10 +64,10 @@ class CrisisDetector:
 
     def process_signal(
         self,
-        data: Union[np.ndarray, pd.Series, pd.DataFrame],
-        timestamps: Optional[np.ndarray] = None,
-        column: Optional[str] = None,
-    ) -> Dict:
+        data: np.ndarray | pd.Series | pd.DataFrame,
+        timestamps: np.ndarray | None = None,
+        column: str | None = None,
+    ) -> dict:
         """
         Process a time-series signal to detect crisis events.
 
@@ -176,7 +177,8 @@ class CrisisDetector:
         crisis_score = np.zeros(n_points)
         crisis_score += np.abs(z_scores) / (self.threshold * 2)  # Normalized z-score
         if volatility_threshold > 0:
-            crisis_score += volatility_norm / volatility_threshold  # Normalized volatility
+            # Clip to non-negative to prevent negative volatility from reducing crisis score
+            crisis_score += np.clip(volatility_norm, 0, None) / volatility_threshold
         crisis_score = np.clip(crisis_score, 0, 1)
 
         # Identify continuous crisis regions
@@ -229,7 +231,7 @@ class CrisisDetector:
         crisis_score: np.ndarray,
         crisis_regions: np.ndarray,
         anomalies: np.ndarray,
-    ) -> Dict:
+    ) -> dict:
         """
         Calculate summary metrics for the detection results.
 
@@ -265,10 +267,10 @@ class CrisisDetector:
 
     def plot_analysis(
         self,
-        results: Dict,
+        results: dict,
         title: str = "Crisis Detection Analysis",
-        save_path: Optional[str] = None,
-        figsize: Tuple[int, int] = (14, 10),
+        save_path: str | None = None,
+        figsize: tuple[int, int] = (14, 10),
     ) -> plt.Figure:
         """
         Create a comprehensive visualization of the crisis detection results.

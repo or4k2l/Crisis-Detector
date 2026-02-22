@@ -1,7 +1,8 @@
 """Gravitational wave data loader: load_gravitational_wave_data."""
 
+from __future__ import annotations
+
 import logging
-from typing import Optional
 
 import numpy as np
 
@@ -12,7 +13,7 @@ def load_gravitational_wave_data(
     detector: str = "H1",
     start_time: int = 1126259446,
     end_time: int = 1126259478,
-) -> Optional[np.ndarray]:
+) -> np.ndarray | None:
     """
     Load gravitational wave data using gwpy.
 
