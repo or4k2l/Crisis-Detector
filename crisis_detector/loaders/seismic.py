@@ -1,7 +1,8 @@
 """Seismic data loader: load_seismic_data."""
 
+from __future__ import annotations
+
 import logging
-from typing import Optional
 
 import numpy as np
 
@@ -15,7 +16,7 @@ def load_seismic_data(
     channel: str = "BHZ",
     starttime: str = "2023-01-01",
     endtime: str = "2023-01-02",
-) -> Optional[np.ndarray]:
+) -> np.ndarray | None:
     """
     Load seismic data using ObsPy.
 
