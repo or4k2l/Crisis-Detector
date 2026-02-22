@@ -6,9 +6,6 @@
 
 A unified framework for detecting anomalies and crisis events across multiple domains including finance, seismology, gravitational waves, and neurophysiology.
 
-<img width="4162" height="982" alt="vis4-imageonline co-merged" src="https://github.com/user-attachments/assets/4c38f71b-5bc1-4500-afb3-6b0424965b7a" />
-<img width="2791" height="982" alt="vis5-imageonline co-merged" src="https://github.com/user-attachments/assets/821d4560-1460-47cf-9521-848f4116012e" />
-
 ## Overview
 
 Crisis Detector is a powerful Python library that identifies potential crisis events in time-series data using a combination of statistical analysis and machine learning techniques. The detector uses a sliding window approach with multiple detection methods:
@@ -17,6 +14,9 @@ Crisis Detector is a powerful Python library that identifies potential crisis ev
 - **Isolation Forest**: Machine learning-based anomaly detection
 - **Volatility Analysis**: Rate-of-change and trend detection
 - **Multi-domain Support**: Works with finance, seismic, gravitational wave, and EEG data
+
+<img width="4162" height="982" alt="vis4-imageonline co-merged" src="https://github.com/user-attachments/assets/4c38f71b-5bc1-4500-afb3-6b0424965b7a" />
+<img width="2791" height="982" alt="vis5-imageonline co-merged" src="https://github.com/user-attachments/assets/821d4560-1460-47cf-9521-848f4116012e" />
 
 ## Features
 
