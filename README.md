@@ -16,7 +16,8 @@ Crisis Detector is a powerful Python library that identifies potential crisis ev
 - **Multi-domain Support**: Works with finance, seismic, gravitational wave, and EEG data
 
 <img width="4162" height="982" alt="vis4-imageonline co-merged" src="https://github.com/user-attachments/assets/4c38f71b-5bc1-4500-afb3-6b0424965b7a" />
-<img width="2791" height="982" alt="vis5-imageonline co-merged" src="https://github.com/user-attachments/assets/821d4560-1460-47cf-9521-848f4116012e" />
+<img width="2781" height="982" alt="vis5-imageonline co-merged (1)" src="https://github.com/user-attachments/assets/b78e8edb-d743-470c-aee2-849a74d1f6cd" />
+
 
 ## Features
 
