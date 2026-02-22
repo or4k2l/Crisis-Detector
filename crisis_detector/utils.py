@@ -1,7 +1,8 @@
 """Shared utility functions for signal preprocessing."""
 
+from __future__ import annotations
+
 import logging
-from typing import Optional, Tuple
 
 import numpy as np
 import pandas as pd
@@ -11,9 +12,9 @@ logger = logging.getLogger(__name__)
 
 def prepare_signal(
     data: "np.ndarray | pd.Series | pd.DataFrame",
-    timestamps: Optional[np.ndarray] = None,
-    column: Optional[str] = None,
-) -> Tuple[np.ndarray, np.ndarray]:
+    timestamps: np.ndarray | None = None,
+    column: str | None = None,
+) -> tuple[np.ndarray, np.ndarray]:
     """
     Extract and clean a 1-D signal from various input formats.
 
@@ -31,11 +32,11 @@ def prepare_signal(
     if isinstance(data, pd.DataFrame):
         if column is None:
             column = data.columns[0]
-        signal_values: np.ndarray = data[column].values
+        signal_values: np.ndarray = np.asarray(data[column].values).flatten()
         if timestamps is None and isinstance(data.index, pd.DatetimeIndex):
             timestamps = data.index.values
     elif isinstance(data, pd.Series):
-        signal_values = data.values
+        signal_values = np.asarray(data.values).flatten()
         if timestamps is None and isinstance(data.index, pd.DatetimeIndex):
             timestamps = data.index.values
     else:

@@ -1,7 +1,8 @@
 """Financial data loaders: load_finance_data and load_economic_data."""
 
+from __future__ import annotations
+
 import logging
-from typing import Optional
 
 import pandas as pd
 
@@ -12,7 +13,7 @@ def load_finance_data(
     ticker: str = "^GSPC",
     start_date: str = "2020-01-01",
     end_date: str = "2023-12-31",
-) -> Optional[pd.DataFrame]:
+) -> pd.DataFrame | None:
     """
     Load financial time-series data using yfinance.
 
@@ -29,6 +30,9 @@ def load_finance_data(
         import yfinance as yf
 
         data = yf.download(ticker, start=start_date, end=end_date, progress=False)
+        # Handle MultiIndex columns from newer yfinance versions
+        if isinstance(data.columns, pd.MultiIndex):
+            data.columns = data.columns.droplevel(1)
         logger.info(f"Successfully loaded finance data for {ticker}")
         return data
     except Exception as e:
@@ -36,7 +40,7 @@ def load_finance_data(
         return None
 
 
-def load_economic_data(dataset: str = "GDP") -> Optional[pd.DataFrame]:
+def load_economic_data(dataset: str = "macrodata") -> pd.DataFrame | None:
     """
     Load economic indicator data using statsmodels.
 
@@ -49,6 +53,10 @@ def load_economic_data(dataset: str = "GDP") -> Optional[pd.DataFrame]:
     try:
         from statsmodels.datasets import macrodata
 
+        if dataset != "macrodata":
+            logger.warning(
+                f"Dataset '{dataset}' is not supported, loading 'macrodata' instead"
+            )
         data = macrodata.load_pandas().data
         logger.info(f"Successfully loaded economic data: {dataset}")
         return data
