@@ -1,7 +1,8 @@
 """Visualization logic for Crisis Detector results."""
 
+from __future__ import annotations
+
 import logging
-from typing import Dict, Optional, Tuple
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -10,10 +11,10 @@ logger = logging.getLogger(__name__)
 
 
 def plot_analysis(
-    results: Dict,
+    results: dict,
     title: str = "Crisis Detection Analysis",
-    save_path: Optional[str] = None,
-    figsize: Tuple[int, int] = (14, 10),
+    save_path: str | None = None,
+    figsize: tuple[int, int] = (14, 10),
     threshold: float = 2.5,
 ) -> plt.Figure:
     """
